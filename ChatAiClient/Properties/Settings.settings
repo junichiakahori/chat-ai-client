@@ -1,0 +1,33 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ChatAiClient.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">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</Value>
+    </Setting>
+    <Setting Name="ApiUrlSample" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://api.openai.com/</Value>
+    </Setting>
+    <Setting Name="ApiUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://chatgpt2.zeabur.app/proxy/</Value>
+    </Setting>
+    <Setting Name="NavigationMessageInit" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">質問内容を入力し、送信ボタンを押してください。</Value>
+    </Setting>
+    <Setting Name="NavigationMessageSubmission" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">質問内容を送信中。回答を受信するまでお待ちください。</Value>
+    </Setting>
+    <Setting Name="NavigationMessageNormal" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</Value>
+    </Setting>
+    <Setting Name="NavigationMessageCancel" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</Value>
+    </Setting>
+    <Setting Name="NavigationMessageError" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">エラーが発生しました。エラーログをご確認ください。</Value>
+    </Setting>
+    <Setting Name="NavigationMessageException" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">例外が発生しました。エラーログをご確認ください。</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
