@@ -23,18 +23,6 @@ namespace ChatAiClient.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("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")]
-        public string ApiKey {
-            get {
-                return ((string)(this["ApiKey"]));
-            }
-            set {
-                this["ApiKey"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://api.openai.com/")]
@@ -107,6 +95,27 @@ namespace ChatAiClient.Properties {
         public string NavigationMessageException {
             get {
                 return ((string)(this["NavigationMessageException"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("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")]
+        public string ApiKey {
+            get {
+                return ((string)(this["ApiKey"]));
+            }
+            set {
+                this["ApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/junichiakahori/chat-ai-client")]
+        public string HelpUrl {
+            get {
+                return ((string)(this["HelpUrl"]));
             }
         }
     }

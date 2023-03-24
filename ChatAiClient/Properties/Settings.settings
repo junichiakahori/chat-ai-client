@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ChatAiClient.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ApiKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">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</Value>
-    </Setting>
     <Setting Name="ApiUrlSample" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://api.openai.com/</Value>
     </Setting>
@@ -28,6 +25,12 @@
     </Setting>
     <Setting Name="NavigationMessageException" Type="System.String" Scope="Application">
       <Value Profile="(Default)">例外が発生しました。エラーログをご確認ください。</Value>
+    </Setting>
+    <Setting Name="ApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">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</Value>
+    </Setting>
+    <Setting Name="HelpUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://github.com/junichiakahori/chat-ai-client</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using NLog.Targets;
 using System.Diagnostics;
+using System.Net;
 
 namespace ChatAiClient
 {
@@ -126,7 +127,7 @@ namespace ChatAiClient
         private void toolStripMenuItemHelp_Click(object sender, EventArgs e)
         {
             // ヘルプページを開く
-            Process.Start("https://github.com/junichiakahori/chat-ai-client");
+            Process.Start(Settings.Default.HelpUrl);
         }
 
         /// <summary>
@@ -378,6 +379,14 @@ namespace ChatAiClient
         /// </summary>
         private void InitHttpClient()
         {
+            // TLSを使用するようにServicePointManagerを設定する
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
+
+            if (_client != null)
+            {
+                _client.Dispose();
+            }
             _client = new HttpClient();
             _client.BaseAddress = new Uri(Settings.Default.ApiUrl);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.Default.ApiKey);
