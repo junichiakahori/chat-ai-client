@@ -2,3 +2,5 @@
 /ChatAiClient/.vs/ChatAiClient/v15
 /ChatAiClient/bin/Debug
 /ChatAiClient/obj/Debug
+/ChatAiClient/bin/Release
+/ChatAiClient/obj/Release
