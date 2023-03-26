@@ -26,15 +26,15 @@ namespace ChatAiClient.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://api.openai.com/")]
-        public string ApiUrlSample {
+        public string ApiUrlDefault {
             get {
-                return ((string)(this["ApiUrlSample"]));
+                return ((string)(this["ApiUrlDefault"]));
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://chatgpt2.zeabur.app/proxy/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.openai.com/")]
         public string ApiUrl {
             get {
                 return ((string)(this["ApiUrl"]));
@@ -82,7 +82,7 @@ namespace ChatAiClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("エラーが発生しました。エラーログをご確認ください。")]
+        [global::System.Configuration.DefaultSettingValueAttribute("エラーが発生しました。ログファイルにてエラー内容をご確認ください。")]
         public string NavigationMessageError {
             get {
                 return ((string)(this["NavigationMessageError"]));
@@ -91,22 +91,10 @@ namespace ChatAiClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("例外が発生しました。エラーログをご確認ください。")]
+        [global::System.Configuration.DefaultSettingValueAttribute("例外が発生しました。ログファイルにてエラー内容をご確認ください。")]
         public string NavigationMessageException {
             get {
                 return ((string)(this["NavigationMessageException"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("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")]
-        public string ApiKey {
-            get {
-                return ((string)(this["ApiKey"]));
-            }
-            set {
-                this["ApiKey"] = value;
             }
         }
         
@@ -116,6 +104,78 @@ namespace ChatAiClient.Properties {
         public string HelpUrl {
             get {
                 return ((string)(this["HelpUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("sk-************************************************")]
+        public string ApiKey {
+            get {
+                return ((string)(this["ApiKey"]));
+            }
+            set {
+                this["ApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("gpt-3.5-turbo")]
+        public string Model {
+            get {
+                return ((string)(this["Model"]));
+            }
+            set {
+                this["Model"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("continue")]
+        public string RequestContinueText {
+            get {
+                return ((string)(this["RequestContinueText"]));
+            }
+            set {
+                this["RequestContinueText"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("v1/chat/completions")]
+        public string ApiUrlPass {
+            get {
+                return ((string)(this["ApiUrlPass"]));
+            }
+            set {
+                this["ApiUrlPass"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("v1/chat/completions")]
+        public string ApiUrlPassDefault {
+            get {
+                return ((string)(this["ApiUrlPassDefault"]));
+            }
+            set {
+                this["ApiUrlPassDefault"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://platform.openai.com/account/api-keys ")]
+        public string ApiKeysUrl {
+            get {
+                return ((string)(this["ApiKeysUrl"]));
+            }
+            set {
+                this["ApiKeysUrl"] = value;
             }
         }
     }

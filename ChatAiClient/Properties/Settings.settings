@@ -2,11 +2,11 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ChatAiClient.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ApiUrlSample" Type="System.String" Scope="Application">
+    <Setting Name="ApiUrlDefault" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://api.openai.com/</Value>
     </Setting>
     <Setting Name="ApiUrl" Type="System.String" Scope="User">
-      <Value Profile="(Default)">https://chatgpt2.zeabur.app/proxy/</Value>
+      <Value Profile="(Default)">https://api.openai.com/</Value>
     </Setting>
     <Setting Name="NavigationMessageInit" Type="System.String" Scope="Application">
       <Value Profile="(Default)">質問内容を入力し、送信ボタンを押してください。</Value>
@@ -21,16 +21,31 @@
       <Value Profile="(Default)">送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</Value>
     </Setting>
     <Setting Name="NavigationMessageError" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">エラーが発生しました。エラーログをご確認ください。</Value>
+      <Value Profile="(Default)">エラーが発生しました。ログファイルにてエラー内容をご確認ください。</Value>
     </Setting>
     <Setting Name="NavigationMessageException" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">例外が発生しました。エラーログをご確認ください。</Value>
-    </Setting>
-    <Setting Name="ApiKey" Type="System.String" Scope="User">
-      <Value Profile="(Default)">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</Value>
+      <Value Profile="(Default)">例外が発生しました。ログファイルにてエラー内容をご確認ください。</Value>
     </Setting>
     <Setting Name="HelpUrl" Type="System.String" Scope="Application">
       <Value Profile="(Default)">https://github.com/junichiakahori/chat-ai-client</Value>
+    </Setting>
+    <Setting Name="ApiKey" Type="System.String" Scope="User">
+      <Value Profile="(Default)">sk-************************************************</Value>
+    </Setting>
+    <Setting Name="Model" Type="System.String" Scope="User">
+      <Value Profile="(Default)">gpt-3.5-turbo</Value>
+    </Setting>
+    <Setting Name="RequestContinueText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">continue</Value>
+    </Setting>
+    <Setting Name="ApiUrlPass" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v1/chat/completions</Value>
+    </Setting>
+    <Setting Name="ApiUrlPassDefault" Type="System.String" Scope="User">
+      <Value Profile="(Default)">v1/chat/completions</Value>
+    </Setting>
+    <Setting Name="ApiKeysUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">https://platform.openai.com/account/api-keys </Value>
     </Setting>
   </Settings>
 </SettingsFile>

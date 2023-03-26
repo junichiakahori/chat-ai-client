@@ -16,7 +16,7 @@ namespace ChatAiClient
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new ChatAiClient());
+            Application.Run(new ChatAiClientMain());
         }
     }
 }
