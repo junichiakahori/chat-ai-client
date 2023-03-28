@@ -139,19 +139,55 @@
   <data name="Submit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Submit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="highlight_min_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\highlight.min.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;iso-2022-jp</value>
+  <data name="InputErrorMessage" xml:space="preserve">
+    <value>{0}を入力してください。</value>
   </data>
-  <data name="highlight_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\highlight.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  <data name="ModelAudioContentType" xml:space="preserve">
+    <value>multipart/form-data</value>
   </data>
-  <data name="index_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\index.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  <data name="ModelAudioDisplayName" xml:space="preserve">
+    <value>音声</value>
   </data>
-  <data name="index_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\index.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  <data name="ModelAudioParamValue" xml:space="preserve">
+    <value>whisper-1</value>
   </data>
-  <data name="showdown_min_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\showdown.min.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;shift_jis</value>
+  <data name="ModelAudioUrlPass" xml:space="preserve">
+    <value>v1/audio/transcriptions</value>
+  </data>
+  <data name="ModelChatContentType" xml:space="preserve">
+    <value>application/json</value>
+  </data>
+  <data name="ModelChatDisplayName" xml:space="preserve">
+    <value>チャット</value>
+  </data>
+  <data name="ModelChatParamValue" xml:space="preserve">
+    <value>gpt-3.5-turbo</value>
+  </data>
+  <data name="ModelChatUrlPass" xml:space="preserve">
+    <value>v1/chat/completions</value>
+  </data>
+  <data name="NavigationMessageCancel" xml:space="preserve">
+    <value>送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</value>
+  </data>
+  <data name="NavigationMessageError" xml:space="preserve">
+    <value>エラーが発生しました。ログファイルにてエラー内容をご確認ください。</value>
+  </data>
+  <data name="NavigationMessageException" xml:space="preserve">
+    <value>例外が発生しました。ログファイルにてエラー内容をご確認ください。</value>
+  </data>
+  <data name="NavigationMessageInit" xml:space="preserve">
+    <value>質問内容を入力し、送信ボタンを押してください。</value>
+  </data>
+  <data name="NavigationMessageSubmission" xml:space="preserve">
+    <value>質問内容を送信中。回答を受信するまでお待ちください。</value>
+  </data>
+  <data name="NavigationMessageSuccess" xml:space="preserve">
+    <value>回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</value>
+  </data>
+  <data name="RequestContinueText" xml:space="preserve">
+    <value>continue</value>
+  </data>
+  <data name="ExistErrorMessage" xml:space="preserve">
+    <value>{0}は存在しません。</value>
   </data>
 </root>

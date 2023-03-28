@@ -12,7 +12,7 @@ namespace ChatAiClient.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -46,60 +46,6 @@ namespace ChatAiClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("質問内容を入力し、送信ボタンを押してください。")]
-        public string NavigationMessageInit {
-            get {
-                return ((string)(this["NavigationMessageInit"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("質問内容を送信中。回答を受信するまでお待ちください。")]
-        public string NavigationMessageSubmission {
-            get {
-                return ((string)(this["NavigationMessageSubmission"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。")]
-        public string NavigationMessageNormal {
-            get {
-                return ((string)(this["NavigationMessageNormal"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。")]
-        public string NavigationMessageCancel {
-            get {
-                return ((string)(this["NavigationMessageCancel"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("エラーが発生しました。ログファイルにてエラー内容をご確認ください。")]
-        public string NavigationMessageError {
-            get {
-                return ((string)(this["NavigationMessageError"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("例外が発生しました。ログファイルにてエラー内容をご確認ください。")]
-        public string NavigationMessageException {
-            get {
-                return ((string)(this["NavigationMessageException"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("https://github.com/junichiakahori/chat-ai-client")]
         public string HelpUrl {
             get {
@@ -116,54 +62,6 @@ namespace ChatAiClient.Properties {
             }
             set {
                 this["ApiKey"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("gpt-3.5-turbo")]
-        public string Model {
-            get {
-                return ((string)(this["Model"]));
-            }
-            set {
-                this["Model"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("continue")]
-        public string RequestContinueText {
-            get {
-                return ((string)(this["RequestContinueText"]));
-            }
-            set {
-                this["RequestContinueText"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v1/chat/completions")]
-        public string ApiUrlPass {
-            get {
-                return ((string)(this["ApiUrlPass"]));
-            }
-            set {
-                this["ApiUrlPass"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("v1/chat/completions")]
-        public string ApiUrlPassDefault {
-            get {
-                return ((string)(this["ApiUrlPassDefault"]));
-            }
-            set {
-                this["ApiUrlPassDefault"] = value;
             }
         }
         

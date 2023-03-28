@@ -1,14 +1,7 @@
-﻿using System;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NLog;
-using ChatAiClient.Properties;
-using System.Net.Http;
-using System.Net.Http.Headers;
+﻿using ChatAiClient.Properties;
+using System;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace ChatAiClient
 {
@@ -17,6 +10,7 @@ namespace ChatAiClient
     /// </summary>
     public partial class FormSettings : Form
     {
+        private static readonly char PasswordChar = '*';
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -52,10 +46,18 @@ namespace ChatAiClient
         /// <param name="e"></param>
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            // 入力チェック
+            if (string.IsNullOrEmpty(textBoxApiUrl.Text))
+            {
+                MessageBox.Show(string.Format(Resources.InputErrorMessage, labelUrl.Text), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                textBoxApiUrl.BackColor = System.Drawing.Color.Red;
+                textBoxApiUrl.Focus();
+                return;
+            }
             Settings.Default.ApiKey = textBoxApiKey.Text;
             Settings.Default.ApiUrl = textBoxApiUrl.Text;
-            Settings.Default.ApiUrlPass = textBoxApiUrlPass.Text;
             Settings.Default.Save();
+            this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
@@ -64,11 +66,18 @@ namespace ChatAiClient
         /// </summary>
         private void LoadSettings()
         {
-            textBoxApiKey.PasswordChar = '●';
+            textBoxApiKey.PasswordChar = PasswordChar;
             textBoxApiKey.Text = Settings.Default.ApiKey;
             checkBoxShowApiKey.Checked = false;
-            textBoxApiUrl.Text = Settings.Default.ApiUrl;
-            textBoxApiUrlPass.Text = Settings.Default.ApiUrlPass;
+            // APIのURLが未設定の場合、デフォルトのURLを表示する
+            if (string.IsNullOrEmpty(Settings.Default.ApiUrl))
+            {
+                textBoxApiUrl.Text = Settings.Default.ApiUrlDefault;
+            }
+            else
+            {
+                textBoxApiUrl.Text = Settings.Default.ApiUrl;
+            }
             linkLabelApiKeys.Text = Settings.Default.ApiKeysUrl;
         }
 
@@ -79,14 +88,14 @@ namespace ChatAiClient
         /// <param name="e"></param>
         private void checkBoxShowApiKey_CheckedChanged(object sender, EventArgs e)
         {
-            if (textBoxApiKey.PasswordChar == '●')
+            if (textBoxApiKey.PasswordChar == PasswordChar)
             {
                 textBoxApiKey.PasswordChar = '\0';
                 checkBoxShowApiKey.Text = "隠す";
             }
             else
             {
-                textBoxApiKey.PasswordChar = '●';
+                textBoxApiKey.PasswordChar = PasswordChar;
                 checkBoxShowApiKey.Text = "表示";
             }
         }

@@ -91,6 +91,15 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
+        ///   {0}は存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ExistErrorMessage {
+            get {
+                return ResourceManager.GetString("ExistErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   型 System.Drawing.Bitmap のローカライズされたリソースを検索します。
         /// </summary>
         internal static System.Drawing.Bitmap File {
@@ -101,8 +110,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   &lt;/div&gt;
-        ///&lt;/body&gt;
+        ///   &lt;/body&gt;
         ///&lt;/html&gt; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string footer_txt {
@@ -117,8 +125,7 @@ namespace ChatAiClient.Properties {
         ///&lt;head&gt;
         ///&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge, chrome=1&quot;&gt;
         ///&lt;/head&gt;
-        ///&lt;body&gt;
-        ///&lt;div id=&quot;response-list&quot;&gt; に類似しているローカライズされた文字列を検索します。
+        ///&lt;body&gt; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string header_txt {
             get {
@@ -127,102 +134,146 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   /*!
-        ///  Theme: Default
-        ///  Description: Original highlight.js style
-        ///  Author: (c) Ivan Sagalaev &lt;maniac@softwaremaniacs.org&gt;
-        ///  Maintainer: @highlightjs/core-team
-        ///  Website: https://highlightjs.org/
-        ///  License: see project LICENSE
-        ///  Touched: 2021
-        ///*/pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#f3f3f3;color:#444}.hljs-comment{color:#697070}.hljs-punctuation,.hljs-tag{color:#444a}.hljs-tag .hljs-attr,.hljs-tag .hljs-name{color:#444}.hljs-attribute,.hljs- [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///   {0}を入力してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string highlight_min_css {
+        internal static string InputErrorMessage {
             get {
-                return ResourceManager.GetString("highlight_min_css", resourceCulture);
+                return ResourceManager.GetString("InputErrorMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   /*!
-        ///  Highlight.js v11.7.0 (git: 82688fad18)
-        ///  (c) 2006-2022 undefined and other contributors
-        ///  License: BSD-3-Clause
-        /// */
-        ///var hljs=function(){&quot;use strict&quot;;var e={exports:{}};function n(e){
-        ///return e instanceof Map?e.clear=e.delete=e.set=()=&gt;{
-        ///throw Error(&quot;map is read-only&quot;)}:e instanceof Set&amp;&amp;(e.add=e.clear=e.delete=()=&gt;{
-        ///throw Error(&quot;set is read-only&quot;)
-        ///}),Object.freeze(e),Object.getOwnPropertyNames(e).forEach((t=&gt;{var a=e[t]
-        ///;&quot;object&quot;!=typeof a||Object.isFrozen(a)||n(a)})),e}
-        ///e.exports=n,e.export [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///   multipart/form-data に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string highlight_min_js {
+        internal static string ModelAudioContentType {
             get {
-                return ResourceManager.GetString("highlight_min_js", resourceCulture);
+                return ResourceManager.GetString("ModelAudioContentType", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   html, body {
-        ///    height: 100%;
-        ///}
-        ////* Add background color to the body */
-        ///body {
-        ///    background-color: rgba(68, 70, 84, 1.0);
-        ///    display: flex;
-        ///    flex-direction: column;
-        ///    justify-content: space-between;
-        ///    margin: 0;
-        ///}
-        ///
-        ///select {
-        ///    max-width: 100%;
-        ///    text-overflow: ellipsis;
-        ///}
-        ///
-        ////* Remove border color from the response list container */
-        ///#response-list {
-        ///    border: none;
-        ///    overflow-y: auto;
-        ///    flex: 1;
-        ///}
-        ///
-        ////* Style for each response element in the list */
-        ///#response-list .re [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///   音声 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string index_css {
+        internal static string ModelAudioDisplayName {
             get {
-                return ResourceManager.GetString("index_css", resourceCulture);
+                return ResourceManager.GetString("ModelAudioDisplayName", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   const API_URL = &apos;/&apos;;
-        ///const converter = new showdown.Converter();
-        ///let promptToRetry = null;
-        ///let uniqueIdToRetry = null;
-        ///
-        ///const submitButton = document.getElementById(&apos;submit-button&apos;);
-        ///const regenerateResponseButton = document.getElementById(&apos;regenerate-response-button&apos;);
-        ///const promptInput = document.getElementById(&apos;prompt-input&apos;);
-        ///const modelSelect = document.getElementById(&apos;model-select&apos;);
-        ///const responseList = document.getElementById(&apos;response-list&apos;);
-        ///const fileInput = document.getElementById(&quot;whi [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///   whisper-1 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string index_js {
+        internal static string ModelAudioParamValue {
             get {
-                return ResourceManager.GetString("index_js", resourceCulture);
+                return ResourceManager.GetString("ModelAudioParamValue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   /*! showdown v 2.1.0 - 21-04-2022 */
-        ///!function(){function a(e){&quot;use strict&quot;;var r={omitExtraWLInCodeBlocks:{defaultValue:!1,describe:&quot;Omit the default extra whiteline added to code blocks&quot;,type:&quot;boolean&quot;},noHeaderId:{defaultValue:!1,describe:&quot;Turn on/off generated header id&quot;,type:&quot;boolean&quot;},prefixHeaderId:{defaultValue:!1,describe:&quot;Add a prefix to the generated header ids. Passing a string will prefix that string to the header id. Setting to true will add a generic &apos;section-&apos; prefix&quot;,type:&quot;string&quot;},rawPref [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///   v1/audio/transcriptions に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string showdown_min_js {
+        internal static string ModelAudioUrlPass {
             get {
-                return ResourceManager.GetString("showdown_min_js", resourceCulture);
+                return ResourceManager.GetString("ModelAudioUrlPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   application/json に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ModelChatContentType {
+            get {
+                return ResourceManager.GetString("ModelChatContentType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   チャット に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ModelChatDisplayName {
+            get {
+                return ResourceManager.GetString("ModelChatDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   gpt-3.5-turbo に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ModelChatParamValue {
+            get {
+                return ResourceManager.GetString("ModelChatParamValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   v1/chat/completions に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ModelChatUrlPass {
+            get {
+                return ResourceManager.GetString("ModelChatUrlPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageCancel {
+            get {
+                return ResourceManager.GetString("NavigationMessageCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   エラーが発生しました。ログファイルにてエラー内容をご確認ください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageError {
+            get {
+                return ResourceManager.GetString("NavigationMessageError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   例外が発生しました。ログファイルにてエラー内容をご確認ください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageException {
+            get {
+                return ResourceManager.GetString("NavigationMessageException", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageInit {
+            get {
+                return ResourceManager.GetString("NavigationMessageInit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   質問内容を送信中。回答を受信するまでお待ちください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageSubmission {
+            get {
+                return ResourceManager.GetString("NavigationMessageSubmission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string NavigationMessageSuccess {
+            get {
+                return ResourceManager.GetString("NavigationMessageSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   continue に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string RequestContinueText {
+            get {
+                return ResourceManager.GetString("RequestContinueText", resourceCulture);
             }
         }
         

@@ -1,20 +1,18 @@
-﻿using System;
+﻿using ChatAiClient.Models;
+using ChatAiClient.Properties;
+using Newtonsoft.Json.Linq;
+using NLog;
+using NLog.Targets;
+using System;
+using System.Diagnostics;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using NLog;
-using ChatAiClient.Properties;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using NLog.Targets;
-using System.Diagnostics;
-using System.Net;
-using MarkdownSharp;
-using System.IO;
-using mshtml;
 
 namespace ChatAiClient
 {
@@ -24,9 +22,9 @@ namespace ChatAiClient
     public partial class ChatAiClientMain : Form
     {
         private static readonly int RetryCountMax = 3;
-        private static readonly int ContinueCountMax = 10;
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         private static HttpClient _client;
+        private static IModel _model;
 
         /// <summary>
         /// 画面状態
@@ -97,10 +95,11 @@ namespace ChatAiClient
         private void toolStripMenuItemSettings_Click(object sender, EventArgs e)
         {
             FormSettings formSettings = new FormSettings();
-            formSettings.ShowDialog();
-
-            // HTTPクライアントを初期化
-            InitHttpClient();
+            if (formSettings.ShowDialog() == DialogResult.OK)
+            {
+                // HTTPクライアントを初期化
+                InitHttpClient();
+            }
         }
 
         /// <summary>
@@ -112,6 +111,12 @@ namespace ChatAiClient
         {
             // ログファイルパスを取得
             var fileName = LogManager.Configuration.FindTargetByName<FileTarget>("logfile").FileName.Render(new LogEventInfo());
+            // ファイルが存在しない場合
+            if (!File.Exists(fileName))
+            {
+                MessageBox.Show(string.Format(Resources.ExistErrorMessage, $"ログファイル({fileName})"), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             // ログファイルを開く
             Process.Start(fileName);
         }
@@ -144,43 +149,65 @@ namespace ChatAiClient
         /// <param name="e"></param>
         private async void toolStripButtonSubmit_Click(object sender, EventArgs e)
         {
-            // 入力チェック
-            if (string.IsNullOrEmpty(textBoxRequest.Text))
+            // 入力チェック(チャットモデルが選択されている場合)
+            if (toolStripComboBoxModels.SelectedItem.ToString() == Resources.ModelChatDisplayName)
             {
+                // 質問内容が未入力のため、処理終了
+                if (string.IsNullOrEmpty(richTextBoxRequest.Text))
+                {
+                    return;
+                }
+            }
+            // 音声モデルが選択されている場合
+            else if (toolStripComboBoxModels.SelectedItem.ToString() == Resources.ModelAudioDisplayName)
+            {
+                // アップロードする音声ファイルパスを取得する
+                using (var openFileDialog = new OpenFileDialog())
+                {
+                    // mp3, mp4, mpeg, mpga, m4a, wav, or webm
+                    openFileDialog.Filter = "音声ファイル (*.mp3, *.mp4, *.mpeg, *.mpga, *.m4a, *.wav, *.webm)|*.mp3;*.mp4;*.mpeg;*.mpga;*.m4a;*.wav;*.webm";
+                    if (openFileDialog.ShowDialog() != DialogResult.OK)
+                    {
+                        return;
+                    }
+                    richTextBoxRequest.Text = openFileDialog.FileName;
+                }
+                // ファイルが存在しない場合
+                if (!File.Exists(richTextBoxRequest.Text))
+                {
+                    // エラー処理
+                    MessageBox.Show(string.Format(Resources.ExistErrorMessage, $"指定されたファイル({richTextBoxRequest.Text})"), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            // モデルが選択されていない場合
+            else
+            {
+                // エラー処理
+                MessageBox.Show(string.Format(Resources.InputErrorMessage, toolStripComboBoxModels.ToolTipText), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             // ログ出力
-            _logger.Info($"[Request]\r\n{textBoxRequest.Text}");
+            _logger.Info($"[Request]\r\n{richTextBoxRequest.Text}");
 
             // 画面状態制御(送信中)
             ControlDisplayState(DisplayState.Submission);
 
             // リクエストBody生成
-            var requestBodyJson = CreateRequestBodyJson(textBoxRequest.Text);
-            var httpContent = new StringContent(string.Empty);
+            var httpContent = _model.GetRequestBody(richTextBoxRequest.Text);
             var response = new HttpResponseMessage();
             try
             {
                 // ChatGPT API実行
                 // エラーが発生した場合、再試行する
-                int retryCount = 0;
-                for (int i = 0; i < ContinueCountMax; i++)
+                for (int i = 0; i < RetryCountMax; i++)
                 {
-                    httpContent = new StringContent(requestBodyJson, Encoding.UTF8, "application/json");
-                    response = await _client.PostAsync($"{Settings.Default.ApiUrlPass}", httpContent);
+                    response = await _client.PostAsync($"{_model.UrlPass}", httpContent);
                     if (response.IsSuccessStatusCode)
                     {
                         // レスポンス処理
                         break;
-                    }
-                    else if (response.StatusCode == HttpStatusCode.InternalServerError)
-                    {
-                        // 途中で止まった場合は続きをリクエスト
-                        // リクエストBody生成
-                        requestBodyJson = CreateRequestBodyJson(Settings.Default.RequestContinueText);
-                        // ログ出力
-                        _logger.Error($"[Continue]\r\n{Settings.Default.RequestContinueText}");
                     }
                     else
                     {
@@ -188,12 +215,6 @@ namespace ChatAiClient
                         Console.WriteLine(errorMessage);
                         // ログ出力
                         _logger.Error($"[Retry]\r\n{errorMessage}");
-                        // 再試行
-                        retryCount++;
-                        if (retryCount >= RetryCountMax)
-                        {
-                            break;
-                        }
                     }
                 }
                 var responseContent = string.Empty;
@@ -218,7 +239,7 @@ namespace ChatAiClient
                             Console.WriteLine(displayText);
                             // ログ出力
                             _logger.Info($"[Response]\r\n{displayText}");
-                            textBoxResponseText.Text = displayText;
+                            richTextBoxResponseText.Text = displayText;
                             // 回答内容HTML出力
                             var displayHtml = messageContent.Replace("\r\n", "\n");
                             displayHtml = messageContent.Replace("\r\n", "\n");
@@ -227,18 +248,9 @@ namespace ChatAiClient
                             string pattern = @"(?!(<[^>]*\s))\s";
                             // 置換
                             string outputHtml = Regex.Replace(displayHtml, pattern, "&nbsp;");
-                            //var markdown = new Markdown();
-                            //markdown.AutoNewLines = true;
-                            //markdown.EmptyElementSuffix = ">";
-                            //displayHtml = markdown.Transform(displayHtml);
                             string header = Resources.header_txt;
                             string res = $"<div id=\"response-list\">\n{outputHtml}\n</div>";
-                            //string js1 = Resources.index_js;
-                            //string js2 = Resources.highlight_min_js;
-                            //string js3 = Resources.showdown_min_js;
-                            //string js = $"<script>\n{js1}\n{js2}\n{js3}\n</script>";
                             string footer = Resources.footer_txt;
-                            //webBrowserResponseHtml.DocumentText = $"{header}\n{res}\n{js}\n{footer}";
                             webBrowserResponseHtml.DocumentText = $"{header}\n{res}\n{footer}";
                         }
                     }
@@ -336,22 +348,14 @@ namespace ChatAiClient
         }
 
         /// <summary>
-        /// 回答内容HTMLの読み込み完了時イベント
+        /// モデル変更イベント
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void webBrowserResponseHtml_DocumentCompleted(object sender, WebBrowserDocumentCompletedEventArgs e)
+        private void toolStripComboBoxModels_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try
-            {
-                // CSS読み込み
-                //LoadCss();
-            }
-            catch (Exception ex)
-            {
-                // 例外処理
-                HandlingException(ex);
-            }
+            // モデルを設定する
+            SetModel(toolStripComboBoxModels.SelectedItem.ToString());
         }
 
         /// <summary>
@@ -366,42 +370,50 @@ namespace ChatAiClient
             {
                 case DisplayState.Init:
                     // 初期表示
+                    toolStripComboBoxModels.Items.Add(Resources.ModelChatDisplayName);
+                    toolStripComboBoxModels.Items.Add(Resources.ModelAudioDisplayName);
+                    toolStripComboBoxModels.SelectedItem = Resources.ModelChatDisplayName;
+                    toolStripComboBoxModels.Enabled = true;
                     toolStripButtonSubmit.Enabled = true;
                     toolStripButtonCancel.Enabled = false;
-                    toolStripStatusLabel.Text = Settings.Default.NavigationMessageInit;
-                    textBoxRequest.Text = string.Empty;
-                    textBoxResponseText.Text = string.Empty;
+                    toolStripStatusLabel.Text = Resources.NavigationMessageInit;
+                    richTextBoxRequest.Text = string.Empty;
+                    richTextBoxResponseText.Text = string.Empty;
                     webBrowserResponseHtml.DocumentText = string.Empty;
                     webBrowserResponseHtml.AllowNavigation = true;
                     webBrowserResponseHtml.ScriptErrorsSuppressed = true;
                     break;
                 case DisplayState.Success:
                     // 成功
+                    toolStripComboBoxModels.Enabled = true;
                     toolStripButtonSubmit.Enabled = true;
                     toolStripButtonCancel.Enabled = false;
-                    toolStripStatusLabel.Text = Settings.Default.NavigationMessageNormal;
+                    toolStripStatusLabel.Text = Resources.NavigationMessageSuccess;
                     // ダイアログ表示
                     MessageBox.Show(toolStripStatusLabel.Text, this.Name, MessageBoxButtons.OK, MessageBoxIcon.Information);
                     break;
                 case DisplayState.Submission:
                     // 送信中
+                    toolStripComboBoxModels.Enabled = false;
                     toolStripButtonSubmit.Enabled = false;
                     toolStripButtonCancel.Enabled = true;
-                    toolStripStatusLabel.Text = Settings.Default.NavigationMessageSubmission;
-                    textBoxResponseText.Text = string.Empty;
+                    toolStripStatusLabel.Text = Resources.NavigationMessageSubmission;
+                    richTextBoxResponseText.Text = string.Empty;
                     webBrowserResponseHtml.DocumentText = string.Empty;
                     break;
                 case DisplayState.Cancel:
-                    // キャンセル    
+                    // キャンセル
+                    toolStripComboBoxModels.Enabled = true;
                     toolStripButtonSubmit.Enabled = true;
                     toolStripButtonCancel.Enabled = false;
-                    toolStripStatusLabel.Text = Settings.Default.NavigationMessageCancel;
+                    toolStripStatusLabel.Text = Resources.NavigationMessageCancel;
                     break;
                 case DisplayState.Error:
                     // エラー
+                    toolStripComboBoxModels.Enabled = true;
                     toolStripButtonSubmit.Enabled = true;
                     toolStripButtonCancel.Enabled = false;
-                    toolStripStatusLabel.Text = Settings.Default.NavigationMessageError;
+                    toolStripStatusLabel.Text = Resources.NavigationMessageError;
                     // ダイアログ表示
                     MessageBox.Show(toolStripStatusLabel.Text, this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     break;
@@ -454,42 +466,26 @@ namespace ChatAiClient
         }
 
         /// <summary>
-        /// リクエストBody生成
+        /// モデルを設定する
         /// </summary>
-        /// <param name="content">リクエスト内容</param>
-        /// <returns></returns>
-        private string CreateRequestBodyJson(string content)
+        /// <param name="displayName">表示名称</param>
+        private void SetModel(string displayName)
         {
-            // JSONデータを作成
-            var requestBody = new
+            // モデルを初期化
+            if (_model != null)
             {
-                model = Settings.Default.Model,
-                messages = new[]
-                {
-                    new
-                    {
-                        role = "user",
-                        content = content
-                    }
-                }
-            };
-            var requestBodyJson = JsonConvert.SerializeObject(requestBody);
-            return requestBodyJson;
-        }
-
-        /// <summary>
-        /// CSS読み込み
-        /// </summary>
-        private void LoadCss()
-        {
-            // リソース内のcssを読み込み
-            var css1 = Resources.index_css;
-            var css2 = Resources.highlight_min_css;
-
-            IHTMLDocument2 htmlDocument2 = (IHTMLDocument2)webBrowserResponseHtml.Document.DomDocument;
-            IHTMLStyleSheet htmlStyleSheet = htmlDocument2.createStyleSheet();
-            htmlStyleSheet.cssText = css1;
-            htmlStyleSheet.cssText = htmlStyleSheet.cssText + css2;
+                _model = null;
+            }
+            // 「音声」の場合
+            if (displayName == Resources.ModelAudioDisplayName)
+            {
+                _model = new AudioModel();
+            }
+            // それ以外の場合(デフォルト)
+            else
+            {
+                _model = new ChatModel();
+            }
         }
 
         /// <summary>
@@ -499,7 +495,7 @@ namespace ChatAiClient
         private void HandlingException(Exception ex)
         {
             // エラーメッセージを表示
-            toolStripStatusLabel.Text = Settings.Default.NavigationMessageException;
+            toolStripStatusLabel.Text = Resources.NavigationMessageException;
             Console.WriteLine(ex.ToString());
             // ログ出力
             _logger.Info($"[Exception]\r\n{ex.ToString()}");

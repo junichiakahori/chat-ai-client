@@ -29,8 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChatAiClientMain));
-            this.textBoxRequest = new System.Windows.Forms.TextBox();
-            this.textBoxResponseText = new System.Windows.Forms.TextBox();
             this.webBrowserResponseHtml = new System.Windows.Forms.WebBrowser();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -41,13 +39,17 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBoxRequest = new System.Windows.Forms.GroupBox();
+            this.richTextBoxRequest = new System.Windows.Forms.RichTextBox();
             this.groupBoxResponse = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPageHtml = new System.Windows.Forms.TabPage();
             this.tabPageText = new System.Windows.Forms.TabPage();
+            this.richTextBoxResponseText = new System.Windows.Forms.RichTextBox();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonSubmit = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonCancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripComboBoxModels = new System.Windows.Forms.ToolStripComboBox();
+            this.splitContainer = new System.Windows.Forms.SplitContainer();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.groupBoxRequest.SuspendLayout();
@@ -56,33 +58,11 @@
             this.tabPageHtml.SuspendLayout();
             this.tabPageText.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
+            this.splitContainer.Panel1.SuspendLayout();
+            this.splitContainer.Panel2.SuspendLayout();
+            this.splitContainer.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // textBoxRequest
-            // 
-            this.textBoxRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxRequest.Location = new System.Drawing.Point(13, 20);
-            this.textBoxRequest.Multiline = true;
-            this.textBoxRequest.Name = "textBoxRequest";
-            this.textBoxRequest.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxRequest.Size = new System.Drawing.Size(518, 94);
-            this.textBoxRequest.TabIndex = 0;
-            this.textBoxRequest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRequest_KeyDown);
-            // 
-            // textBoxResponseText
-            // 
-            this.textBoxResponseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxResponseText.Location = new System.Drawing.Point(9, 5);
-            this.textBoxResponseText.Multiline = true;
-            this.textBoxResponseText.Name = "textBoxResponseText";
-            this.textBoxResponseText.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxResponseText.Size = new System.Drawing.Size(519, 149);
-            this.textBoxResponseText.TabIndex = 2;
-            this.textBoxResponseText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxResponseText_KeyDown);
             // 
             // webBrowserResponseHtml
             // 
@@ -91,9 +71,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.webBrowserResponseHtml.Location = new System.Drawing.Point(9, 6);
             this.webBrowserResponseHtml.Name = "webBrowserResponseHtml";
-            this.webBrowserResponseHtml.Size = new System.Drawing.Size(518, 147);
+            this.webBrowserResponseHtml.Size = new System.Drawing.Size(530, 109);
             this.webBrowserResponseHtml.TabIndex = 0;
-            this.webBrowserResponseHtml.DocumentCompleted += new System.Windows.Forms.WebBrowserDocumentCompletedEventHandler(this.webBrowserResponseHtml_DocumentCompleted);
             // 
             // menuStrip1
             // 
@@ -150,10 +129,10 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 393);
+            this.statusStrip.Location = new System.Drawing.Point(0, 339);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(584, 22);
-            this.statusStrip.TabIndex = 4;
+            this.statusStrip.TabIndex = 3;
             this.statusStrip.Text = "statusStrip1";
             // 
             // toolStripStatusLabel
@@ -164,16 +143,29 @@
             // 
             // groupBoxRequest
             // 
-            this.groupBoxRequest.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.groupBoxRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxRequest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.groupBoxRequest.Controls.Add(this.textBoxRequest);
-            this.groupBoxRequest.Location = new System.Drawing.Point(12, 52);
+            this.groupBoxRequest.Controls.Add(this.richTextBoxRequest);
+            this.groupBoxRequest.Location = new System.Drawing.Point(12, 3);
             this.groupBoxRequest.Name = "groupBoxRequest";
-            this.groupBoxRequest.Size = new System.Drawing.Size(548, 120);
-            this.groupBoxRequest.TabIndex = 2;
+            this.groupBoxRequest.Size = new System.Drawing.Size(560, 96);
+            this.groupBoxRequest.TabIndex = 0;
             this.groupBoxRequest.TabStop = false;
             this.groupBoxRequest.Text = "質問";
+            // 
+            // richTextBoxRequest
+            // 
+            this.richTextBoxRequest.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxRequest.Location = new System.Drawing.Point(13, 18);
+            this.richTextBoxRequest.Name = "richTextBoxRequest";
+            this.richTextBoxRequest.Size = new System.Drawing.Size(537, 72);
+            this.richTextBoxRequest.TabIndex = 1;
+            this.richTextBoxRequest.Text = "";
+            this.richTextBoxRequest.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRequest_KeyDown);
             // 
             // groupBoxResponse
             // 
@@ -182,10 +174,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBoxResponse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.groupBoxResponse.Controls.Add(this.tabControl1);
-            this.groupBoxResponse.Location = new System.Drawing.Point(12, 178);
+            this.groupBoxResponse.Location = new System.Drawing.Point(12, 3);
             this.groupBoxResponse.Name = "groupBoxResponse";
-            this.groupBoxResponse.Size = new System.Drawing.Size(548, 212);
-            this.groupBoxResponse.TabIndex = 3;
+            this.groupBoxResponse.Size = new System.Drawing.Size(560, 172);
+            this.groupBoxResponse.TabIndex = 0;
             this.groupBoxResponse.TabStop = false;
             this.groupBoxResponse.Text = "回答";
             // 
@@ -198,38 +190,53 @@
             this.tabControl1.Controls.Add(this.tabPageHtml);
             this.tabControl1.Controls.Add(this.tabPageText);
             this.tabControl1.Location = new System.Drawing.Point(0, 18);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
+            this.tabControl1.Padding = new System.Drawing.Point(0, 0);
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(542, 186);
+            this.tabControl1.Size = new System.Drawing.Size(554, 148);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPageHtml
             // 
+            this.tabPageHtml.BackColor = System.Drawing.SystemColors.Control;
             this.tabPageHtml.Controls.Add(this.webBrowserResponseHtml);
             this.tabPageHtml.Location = new System.Drawing.Point(4, 4);
             this.tabPageHtml.Name = "tabPageHtml";
             this.tabPageHtml.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageHtml.Size = new System.Drawing.Size(534, 160);
+            this.tabPageHtml.Size = new System.Drawing.Size(546, 122);
             this.tabPageHtml.TabIndex = 0;
             this.tabPageHtml.Text = "HTML";
-            this.tabPageHtml.UseVisualStyleBackColor = true;
             // 
             // tabPageText
             // 
-            this.tabPageText.Controls.Add(this.textBoxResponseText);
+            this.tabPageText.BackColor = System.Drawing.SystemColors.Control;
+            this.tabPageText.Controls.Add(this.richTextBoxResponseText);
             this.tabPageText.Location = new System.Drawing.Point(4, 4);
+            this.tabPageText.Margin = new System.Windows.Forms.Padding(0);
             this.tabPageText.Name = "tabPageText";
-            this.tabPageText.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageText.Size = new System.Drawing.Size(534, 160);
+            this.tabPageText.Size = new System.Drawing.Size(546, 122);
             this.tabPageText.TabIndex = 1;
             this.tabPageText.Text = "テキスト";
-            this.tabPageText.UseVisualStyleBackColor = true;
+            // 
+            // richTextBoxResponseText
+            // 
+            this.richTextBoxResponseText.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxResponseText.Location = new System.Drawing.Point(9, 3);
+            this.richTextBoxResponseText.Name = "richTextBoxResponseText";
+            this.richTextBoxResponseText.Size = new System.Drawing.Size(537, 116);
+            this.richTextBoxResponseText.TabIndex = 2;
+            this.richTextBoxResponseText.Text = "";
+            this.richTextBoxResponseText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRequest_KeyDown);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonSubmit,
-            this.toolStripButtonCancel});
+            this.toolStripButtonCancel,
+            this.toolStripComboBoxModels});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(584, 25);
@@ -256,15 +263,42 @@
             this.toolStripButtonCancel.ToolTipText = "キャンセル (Esc)";
             this.toolStripButtonCancel.Click += new System.EventHandler(this.toolStripButtonCancel_Click);
             // 
+            // toolStripComboBoxModels
+            // 
+            this.toolStripComboBoxModels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.toolStripComboBoxModels.Name = "toolStripComboBoxModels";
+            this.toolStripComboBoxModels.Size = new System.Drawing.Size(121, 25);
+            this.toolStripComboBoxModels.ToolTipText = "使用するモデル";
+            this.toolStripComboBoxModels.SelectedIndexChanged += new System.EventHandler(this.toolStripComboBoxModels_SelectedIndexChanged);
+            // 
+            // splitContainer
+            // 
+            this.splitContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer.Location = new System.Drawing.Point(0, 52);
+            this.splitContainer.Name = "splitContainer";
+            this.splitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer.Panel1
+            // 
+            this.splitContainer.Panel1.Controls.Add(this.groupBoxRequest);
+            // 
+            // splitContainer.Panel2
+            // 
+            this.splitContainer.Panel2.Controls.Add(this.groupBoxResponse);
+            this.splitContainer.Size = new System.Drawing.Size(584, 284);
+            this.splitContainer.SplitterDistance = 102;
+            this.splitContainer.TabIndex = 2;
+            // 
             // ChatAiClientMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
-            this.ClientSize = new System.Drawing.Size(584, 415);
+            this.ClientSize = new System.Drawing.Size(584, 361);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.groupBoxResponse);
-            this.Controls.Add(this.groupBoxRequest);
+            this.Controls.Add(this.splitContainer);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -280,22 +314,22 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             this.groupBoxRequest.ResumeLayout(false);
-            this.groupBoxRequest.PerformLayout();
             this.groupBoxResponse.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPageHtml.ResumeLayout(false);
             this.tabPageText.ResumeLayout(false);
-            this.tabPageText.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.splitContainer.Panel1.ResumeLayout(false);
+            this.splitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).EndInit();
+            this.splitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBoxRequest;
-        private System.Windows.Forms.TextBox textBoxResponseText;
         private System.Windows.Forms.WebBrowser webBrowserResponseHtml;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemSettings;
@@ -313,6 +347,10 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenLogFile;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemClose;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemHelp;
+        private System.Windows.Forms.SplitContainer splitContainer;
+        private System.Windows.Forms.ToolStripComboBox toolStripComboBoxModels;
+        private System.Windows.Forms.RichTextBox richTextBoxRequest;
+        private System.Windows.Forms.RichTextBox richTextBoxResponseText;
     }
 }
 
