@@ -49,13 +49,14 @@ namespace ChatAiClient
             // 入力チェック
             if (string.IsNullOrEmpty(textBoxApiUrl.Text))
             {
-                MessageBox.Show(string.Format(Resources.InputErrorMessage, labelUrl.Text), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(string.Format(Resources.InputErrorMessage, labelApiUrl.Text), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 textBoxApiUrl.BackColor = System.Drawing.Color.Red;
                 textBoxApiUrl.Focus();
                 return;
             }
             Settings.Default.ApiKey = textBoxApiKey.Text;
             Settings.Default.ApiUrl = textBoxApiUrl.Text;
+            Settings.Default.ChunkSizeMb = numericUpDownChunkSize.Value;
             Settings.Default.Save();
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -79,6 +80,7 @@ namespace ChatAiClient
                 textBoxApiUrl.Text = Settings.Default.ApiUrl;
             }
             linkLabelApiKeys.Text = Settings.Default.ApiKeysUrl;
+            numericUpDownChunkSize.Value = Settings.Default.ChunkSizeMb;
         }
 
         /// <summary>

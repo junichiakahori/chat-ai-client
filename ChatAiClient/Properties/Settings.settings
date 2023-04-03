@@ -17,5 +17,8 @@
     <Setting Name="ApiKeysUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">https://platform.openai.com/account/api-keys </Value>
     </Setting>
+    <Setting Name="ChunkSizeMb" Type="System.Decimal" Scope="User">
+      <Value Profile="(Default)">0.5</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

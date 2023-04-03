@@ -19,7 +19,7 @@ namespace ChatAiClient.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -47,7 +47,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   すべてについて、現在のスレッドの CurrentUICulture プロパティをオーバーライドします
+        ///   厳密に型指定されたこのリソース クラスを使用して、すべての検索リソースに対し、
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -215,7 +215,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        ///   送信をキャンセルしました。再度依頼する場合は依頼内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NavigationMessageCancel {
             get {
@@ -242,7 +242,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        ///   依頼内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NavigationMessageInit {
             get {
@@ -251,7 +251,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   質問内容を送信中。回答を受信するまでお待ちください。 に類似しているローカライズされた文字列を検索します。
+        ///   依頼内容を送信中。回答を受信するまでお待ちください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NavigationMessageSubmission {
             get {
@@ -260,7 +260,7 @@ namespace ChatAiClient.Properties {
         }
         
         /// <summary>
-        ///   回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
+        ///   依頼内容をご確認ください。再度依頼する場合は依頼内容を入力し、送信ボタンを押してください。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string NavigationMessageSuccess {
             get {

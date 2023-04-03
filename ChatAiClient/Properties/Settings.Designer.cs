@@ -76,5 +76,17 @@ namespace ChatAiClient.Properties {
                 this["ApiKeysUrl"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public decimal ChunkSizeMb {
+            get {
+                return ((decimal)(this["ChunkSizeMb"]));
+            }
+            set {
+                this["ChunkSizeMb"] = value;
+            }
+        }
     }
 }

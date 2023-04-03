@@ -153,7 +153,7 @@
             this.groupBoxRequest.Size = new System.Drawing.Size(560, 96);
             this.groupBoxRequest.TabIndex = 0;
             this.groupBoxRequest.TabStop = false;
-            this.groupBoxRequest.Text = "質問";
+            this.groupBoxRequest.Text = "依頼";
             // 
             // richTextBoxRequest
             // 

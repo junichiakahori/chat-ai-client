@@ -167,7 +167,7 @@
     <value>v1/chat/completions</value>
   </data>
   <data name="NavigationMessageCancel" xml:space="preserve">
-    <value>送信をキャンセルしました。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</value>
+    <value>送信をキャンセルしました。再度依頼する場合は依頼内容を入力し、送信ボタンを押してください。</value>
   </data>
   <data name="NavigationMessageError" xml:space="preserve">
     <value>エラーが発生しました。ログファイルにてエラー内容をご確認ください。</value>
@@ -176,13 +176,13 @@
     <value>例外が発生しました。ログファイルにてエラー内容をご確認ください。</value>
   </data>
   <data name="NavigationMessageInit" xml:space="preserve">
-    <value>質問内容を入力し、送信ボタンを押してください。</value>
+    <value>依頼内容を入力し、送信ボタンを押してください。</value>
   </data>
   <data name="NavigationMessageSubmission" xml:space="preserve">
-    <value>質問内容を送信中。回答を受信するまでお待ちください。</value>
+    <value>依頼内容を送信中。回答を受信するまでお待ちください。</value>
   </data>
   <data name="NavigationMessageSuccess" xml:space="preserve">
-    <value>回答内容をご確認ください。再度質問する場合は質問内容を入力し、送信ボタンを押してください。</value>
+    <value>依頼内容をご確認ください。再度依頼する場合は依頼内容を入力し、送信ボタンを押してください。</value>
   </data>
   <data name="RequestContinueText" xml:space="preserve">
     <value>continue</value>

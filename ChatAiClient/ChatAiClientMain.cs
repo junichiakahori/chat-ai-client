@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace ChatAiClient
 {
@@ -56,6 +57,16 @@ namespace ChatAiClient
             /// </summary>
             Error
         }
+
+        /// <summary>
+        /// 依頼モデル
+        /// </summary>
+        public RequestModel RequestModel { get; set; }
+
+        /// <summary>
+        /// 応答モデル
+        /// </summary>
+        public ResponseModel ResponseModel { get; set; }
 
         /// <summary>
         /// コンストラクタ
@@ -149,42 +160,16 @@ namespace ChatAiClient
         /// <param name="e"></param>
         private async void toolStripButtonSubmit_Click(object sender, EventArgs e)
         {
-            // 入力チェック(チャットモデルが選択されている場合)
-            if (toolStripComboBoxModels.SelectedItem.ToString() == Resources.ModelChatDisplayName)
+            RequestModel = new RequestModel();
+            ResponseModel = new ResponseModel();
+
+            // リクエスト内容を設定する
+            RequestModel.Content = richTextBoxRequest.Text;
+            _model.SetHttpContent(RequestModel);
+            richTextBoxRequest.Text = RequestModel.Content;
+            // リクエスト内容が未設定のため、処理終了
+            if (string.IsNullOrEmpty(richTextBoxRequest.Text))
             {
-                // 質問内容が未入力のため、処理終了
-                if (string.IsNullOrEmpty(richTextBoxRequest.Text))
-                {
-                    return;
-                }
-            }
-            // 音声モデルが選択されている場合
-            else if (toolStripComboBoxModels.SelectedItem.ToString() == Resources.ModelAudioDisplayName)
-            {
-                // アップロードする音声ファイルパスを取得する
-                using (var openFileDialog = new OpenFileDialog())
-                {
-                    // mp3, mp4, mpeg, mpga, m4a, wav, or webm
-                    openFileDialog.Filter = "音声ファイル (*.mp3, *.mp4, *.mpeg, *.mpga, *.m4a, *.wav, *.webm)|*.mp3;*.mp4;*.mpeg;*.mpga;*.m4a;*.wav;*.webm";
-                    if (openFileDialog.ShowDialog() != DialogResult.OK)
-                    {
-                        return;
-                    }
-                    richTextBoxRequest.Text = openFileDialog.FileName;
-                }
-                // ファイルが存在しない場合
-                if (!File.Exists(richTextBoxRequest.Text))
-                {
-                    // エラー処理
-                    MessageBox.Show(string.Format(Resources.ExistErrorMessage, $"指定されたファイル({richTextBoxRequest.Text})"), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-            }
-            // モデルが選択されていない場合
-            else
-            {
-                // エラー処理
-                MessageBox.Show(string.Format(Resources.InputErrorMessage, toolStripComboBoxModels.ToolTipText), this.Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -194,73 +179,69 @@ namespace ChatAiClient
             // 画面状態制御(送信中)
             ControlDisplayState(DisplayState.Submission);
 
-            // リクエストBody生成
-            var httpContent = _model.GetRequestBody(richTextBoxRequest.Text);
-            var response = new HttpResponseMessage();
             try
             {
-                // ChatGPT API実行
-                // エラーが発生した場合、再試行する
+                // エラーが発生した場合、リトライする
                 for (int i = 0; i < RetryCountMax; i++)
                 {
-                    response = await _client.PostAsync($"{_model.UrlPass}", httpContent);
-                    if (response.IsSuccessStatusCode)
+                    // リトライの場合
+                    if (ResponseModel.IsRetry)
+                    {
+                        // リクエスト内容を再設定する
+                        _model.SetHttpContent(RequestModel);
+                    }
+                    // API実行
+                    ResponseModel = await _model.PostAsync(RequestModel);
+                    if (ResponseModel.HttpResponseMessages.Last().IsSuccessStatusCode)
                     {
                         // レスポンス処理
                         break;
                     }
+                    // リトライしない場合
+                    else if (!ResponseModel.IsRetry)
+                    {
+                        // エラー処理
+                        break;
+                    }
                     else
                     {
-                        var errorMessage = "Error: " + response.StatusCode;
+                        // リトライ処理
+                        var errorMessage = "Error: " + ResponseModel.HttpResponseMessages.Last().StatusCode;
                         Console.WriteLine(errorMessage);
                         // ログ出力
                         _logger.Error($"[Retry]\r\n{errorMessage}");
                     }
                 }
-                var responseContent = string.Empty;
                 // API実行結果を確認
                 // 成功の場合
-                if (response.IsSuccessStatusCode)
+                if (ResponseModel.HttpResponseMessages.Last().IsSuccessStatusCode)
                 {
-                    // 回答を表示
-                    responseContent = await response.Content.ReadAsStringAsync();
-                    Console.WriteLine(responseContent);
-
-                    var json = JObject.Parse(responseContent);
-                    var choices = json["choices"];
-                    if (choices != null)
-                    {
-                        var message = choices[0]["message"];
-                        if (message != null)
-                        {
-                            // 回答内容テキスト出力
-                            var messageContent = message["content"].ToString();
-                            var displayText = messageContent.Replace("\n", "\r\n");
-                            Console.WriteLine(displayText);
-                            // ログ出力
-                            _logger.Info($"[Response]\r\n{displayText}");
-                            richTextBoxResponseText.Text = displayText;
-                            // 回答内容HTML出力
-                            var displayHtml = messageContent.Replace("\r\n", "\n");
-                            displayHtml = messageContent.Replace("\r\n", "\n");
-                            displayHtml = messageContent.Replace("\n", "<br>\n");
-                            // HTMLタグ以外のスペースを&nbsp;に置換する正規表現パターン
-                            string pattern = @"(?!(<[^>]*\s))\s";
-                            // 置換
-                            string outputHtml = Regex.Replace(displayHtml, pattern, "&nbsp;");
-                            string header = Resources.header_txt;
-                            string res = $"<div id=\"response-list\">\n{outputHtml}\n</div>";
-                            string footer = Resources.footer_txt;
-                            webBrowserResponseHtml.DocumentText = $"{header}\n{res}\n{footer}";
-                        }
-                    }
+                    // 回答を取得
+                    var responseContent = await _model.GetResponseContent(ResponseModel);
+                    // 回答内容テキスト出力
+                    var displayText = responseContent.Replace("\n", "\r\n");
+                    Console.WriteLine(displayText);
+                    // ログ出力
+                    _logger.Info($"[Response]\r\n{displayText}");
+                    richTextBoxResponseText.Text = displayText;
+                    // 回答内容HTML出力
+                    var displayHtml = responseContent.Replace("\r\n", "\n");
+                    displayHtml = displayHtml.Replace("\n", "<br>\n");
+                    // HTMLタグ以外のスペースを&nbsp;に置換する正規表現パターン
+                    string pattern = @"(?!(<[^>]*\s))\s";
+                    // 置換
+                    string outputHtml = Regex.Replace(displayHtml, pattern, "&nbsp;");
+                    string header = Resources.header_txt;
+                    string res = $"<div id=\"response-list\">\n{outputHtml}\n</div>";
+                    string footer = Resources.footer_txt;
+                    webBrowserResponseHtml.DocumentText = $"{header}\n{res}\n{footer}";
                     // 画面状態制御(成功)
                     ControlDisplayState(DisplayState.Success);
                 }
                 // 失敗の場合
                 else
                 {
-                    var errorMessage = "Error: " + response.StatusCode;
+                    var errorMessage = "Error: " + ResponseModel.HttpResponseMessages.Last().StatusCode;
                     // エラーメッセージを表示
                     toolStripStatusLabel.Text = errorMessage;
                     Console.WriteLine(errorMessage);
@@ -280,6 +261,11 @@ namespace ChatAiClient
                 // 例外処理
                 HandlingException(ex);
             }
+            finally
+            {
+                // リクエストモデルを破棄する
+                RequestModel.Dispose();
+            }
         }
 
         /// <summary>
@@ -290,7 +276,7 @@ namespace ChatAiClient
         private void toolStripButtonCancel_Click(object sender, EventArgs e)
         {
             // キャンセル処理
-            _client.CancelPendingRequests();
+            _model.CancelPendingRequests();
         }
 
         /// <summary>
@@ -455,14 +441,12 @@ namespace ChatAiClient
                 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
 
-            if (_client != null)
-            {
-                _client.Dispose();
-            }
             _client = new HttpClient();
             _client.BaseAddress = new Uri(Settings.Default.ApiUrl);
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Settings.Default.ApiKey);
             _client.Timeout = TimeSpan.FromSeconds(180);
+            // モデルのHTTPクライアントに反映する
+            _model.InitHttpClient(_client);
         }
 
         /// <summary>
@@ -480,12 +464,18 @@ namespace ChatAiClient
             if (displayName == Resources.ModelAudioDisplayName)
             {
                 _model = new AudioModel();
+                // 質問内容を非活性にする
+                richTextBoxRequest.Enabled = false;
             }
             // それ以外の場合(デフォルト)
             else
             {
                 _model = new ChatModel();
+                // 質問内容を活性にする
+                richTextBoxRequest.Enabled = true;
             }
+            // HTTPクライアントを初期化
+            InitHttpClient();
         }
 
         /// <summary>
